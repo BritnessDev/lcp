@@ -1,0 +1,3 @@
+#!/bin/bash
+d=$(dirname "$0")
+LD_PRELOAD="$d/inject.so" "$@"

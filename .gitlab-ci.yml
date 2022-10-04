@@ -1,0 +1,23 @@
+image: ubuntu:20.04
+
+stages:
+  - build_stage
+  - test_stage
+
+build:
+  stage: build_stage
+  script:
+    - apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential make npm
+    - npm install -g bats
+    - make
+  artifacts:
+    paths:
+      - lcp
+    expire_in: 30 mins
+
+test:
+  stage: test_stage
+  script:
+    - apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y ltrace build-essential make npm
+    - npm install -g bats
+    - make check
